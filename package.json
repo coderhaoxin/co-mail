@@ -1,6 +1,6 @@
 {
   "name": "npm-update-all",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "a command line tool to update all dependencies&devDependencies in package.json",
   "main": "cmd.js",
   "bin": {
@@ -11,13 +11,17 @@
     "url": "git://github.com/coderhaoxin/npm-update-all.git"
   },
   "keywords": [
-    "update",
-    "npm"
+    "npm",
+    "tool",
+    "update"
   ],
   "author": "haoxin",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/coderhaoxin/npm-update-all/issues"
+  },
+  "engines": {
+    "node": ">= 0.11.11"
   },
   "homepage": "https://github.com/coderhaoxin/npm-update-all"
 }

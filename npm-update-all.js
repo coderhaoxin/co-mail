@@ -3,37 +3,59 @@
 'use strict';
 
 var cp = require('child_process'),
-  pkg = require(process.cwd() + '/package.json'),
-  params = process.argv.slice(1);
+  pkgInfo = require(process.cwd() + '/package.json'),
+  params = process.argv.slice(2);
 
-params = params.join(' ');
-params.replace('--save', '');
-params.replace('--save-dev', '');
+params = params.join(' ')
+  .replace('--save', '')
+  .replace('--save-dev', '')
+  .split(' ');
 
-if (pkg.dependencies) {
-  var deps = Object.keys(pkg.dependencies);
+if (pkgInfo.dependencies) {
+  install(pkgInfo.dependencies, '--save');
+}
 
-  for (var i = 0; i < deps.length; i++) {
-    console.log('npm update', deps[i]);
-    var result = cp.spawnSync('npm', ['update', deps[i], '--save', params]);
+if (pkgInfo.devDependencies) {
+  install(pkgInfo.devDependencies, '--save-dev');
+}
+
+function install(deps, type) {
+  var pkgs = Object.keys(deps);
+
+  var args, result;
+
+  for (var i = 0; i < pkgs.length; i++) {
+    var version = deps[pkgs[i]];
+
+    var pkg = pkgs[i] + '@latest';
+
+    if (needSave(version)) {
+      args = ['install', pkg, type].concat(params);
+    } else {
+      args = ['install', pkg].concat(params);
+    }
+
+    console.log('npm', args.join(' '));
+
+    result = cp.spawnSync('npm', args);
+
     if (result.status) {
       console.error(result.stderr.toString());
     } else {
-      console.log(result.stdout.toString());
+      console.info(result.stdout.toString());
     }
   }
 }
 
-if (pkg.devDependencies) {
-  var devDeps = Object.keys(pkg.devDependencies);
+function needSave(v) {
+  // save
+  // ~x.x.x, ^x.x.x, 0.0.x
 
-  for (var j = 0; j < devDeps.length; j++) {
-    console.log('npm update', devDeps[j]);
-    var result = cp.spawnSync('npm', ['update', devDeps[j], '--save-dev', params]);
-    if (result.status) {
-      console.error(result.stderr.toString());
-    } else {
-      console.log(result.stdout.toString());
-    }
+  // not save
+  // x, *
+  if (v.indexOf('~') === 0 || v.indexOf('^') === 0 || v.indexOf('0.') === 0) {
+    return true;
   }
+
+  return false;
 }
