@@ -1,8 +1,8 @@
 {
   "name": "npm-update-all",
-  "version": "0.1.0",
-  "description": "a command line tool to update all dependencies&devDependencies in package.json",
-  "main": "cmd.js",
+  "version": "0.2.0",
+  "description": "a command line tool to update all dependencies & devDependencies in package.json",
+  "main": "npm-update-all.js",
   "bin": {
     "npm-update-all": "npm-update-all.js"
   },
@@ -13,7 +13,8 @@
   "keywords": [
     "npm",
     "tool",
-    "update"
+    "update",
+    "dependencies"
   ],
   "author": "haoxin",
   "license": "MIT",
