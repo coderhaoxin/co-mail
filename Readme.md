@@ -1,13 +1,13 @@
-[![NPM version][npm-img]][npm-url]
+# deprecated
+
 [![License][license-img]][license-url]
-[![Dependency status][david-img]][david-url]
 
 ### npm-update-all
 a command line tool to update all dependences & devDependences in package.json
 
 ### install
 ```bash
-npm install npm-update-all -g
+npm install coderhaoxin/npm-update-all -g
 ```
 
 ### usage
